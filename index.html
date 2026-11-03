@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luxo em veículos · Junior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#17171c;--text:#3a3a44;--muted:#6a6a75;--line:#e6e6ec;--soft:#f4f4f8;--bg:#fff;--red:#d43c3c;--blue:#3b5bdb}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+h1,h2{color:var(--ink);font-weight:600;letter-spacing:-.025em;margin:0}
+h1{font-size:clamp(34px,6vw,54px);line-height:1.05;padding-top:56px}
+h2{font-size:26px;margin:48px 0 4px}
+.meta{color:var(--muted);margin-top:10px;font-size:16px}
+.meta b{color:var(--ink)}
+.graficos{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:32px 0 0}
+@media(max-width:760px){.graficos{grid-template-columns:1fr}}
+figure{margin:0;text-align:center}
+figcaption{font-size:17px;font-weight:600;color:var(--ink);margin-top:6px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.ponto{border-top:1px solid var(--line);padding:16px 0}
+.ponto .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ponto b{color:var(--ink);font-size:19px;font-weight:600;flex:1}
+.n{font-variant-numeric:tabular-nums;color:var(--muted);font-size:16px}
+.n em{font-style:normal;font-weight:700}
+.up{color:var(--red)}.down{color:var(--blue)}
+.c{font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px}
+.c.P{background:#fff3dc;color:#8a5a00}.c.N{background:#fde8e8;color:#a32020}
+.ponto p{margin:6px 0 0;color:var(--ink)}
+blockquote{margin:10px 0 0;padding:10px 14px;background:#fdeeee;border-radius:12px 12px 12px 4px;font-size:15px;color:var(--ink)}
+blockquote cite{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:4px}
+footer{margin-top:40px;padding:20px 0 40px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="wrap">
+<h1>O luxo em veículos</h1>
+<p class="meta">Junior Antunes · executivo de vendas · <b>3 de 9</b> pesos iguais aos nossos</p>
+
+<div class="graficos"><figure id="g1"></figure><figure id="g2"></figure></div>
+
+<h2>Onde discordamos</h2>
+<div class="ponto"><div class="top"><b>Supérfluo</b><span class="n">nós 1 → Junior 3 <em class="up">(+2)</em></span><span class="c N">Não</span></div><p>Porsche e Ferrari “para sair no final de semana”: carro a mais é supérfluo.</p></div><div class="ponto"><div class="top"><b>Qualidade</b><span class="n">nós 5 → Junior 4 <em class="down">(−1)</em></span><span class="c P">Em parte</span></div><p>Em carro premium, qualidade é pré-requisito, não diferencial.</p></div><div class="ponto"><div class="top"><b>Status</b><span class="n">nós 4 → Junior 5 <em class="up">(+1)</em></span><span class="c P">Em parte</span></div><p>“É chamar atenção, é poder pertencer a uma nova classe.”</p></div><div class="ponto"><div class="top"><b>Preço</b><span class="n">nós 4 → Junior 3 <em class="down">(−1)</em></span><span class="c P">Em parte</span></div><p>“O luxo muitas vezes não está necessariamente atrelado ao valor.”</p></div><div class="ponto"><div class="top"><b>Tradição</b><span class="n">nós 4 → Junior 3 <em class="down">(−1)</em></span><span class="c P">Em parte</span></div><p>O pedigree conta, mas não vem primeiro.</p></div><div class="ponto"><div class="top"><b>Hedonismo</b><span class="n">nós 4 → Junior 5 <em class="up">(+1)</em></span><span class="c P">Em parte</span></div><p>“A grande maioria é a satisfação pessoal.” Prazer é o motivo principal.</p></div>
+
+<footer>
+TCC “O que é luxo hoje não é amanhã?” · Felipe Santiago Busetti, João Guilherme Valente Belinelli e Vinícius Benevides · orientação do Prof. Juan.<br>
+Escala de 1 a 5. Concordância pela diferença de peso: 1 ponto = em parte, 2 ou mais = não.
+</footer>
+</main>
+<script>
+const CAR = ["Qualidade", "Escassez", "Status", "Preço", "Tradição", "Estética", "Hedonismo", "Self", "Supérfluo"];
+// radar igual ao da página de agradecimento
+const NS = "http://www.w3.org/2000/svg", N = 9, R = 150, NIVEIS = 5;
+const ang = i => -Math.PI / 2 + i * 2 * Math.PI / N;
+const pt = (i, r) => [r * Math.cos(ang(i)), r * Math.sin(ang(i))];
+const poly = r => CAR.map((_, i) => pt(i, r).map(n => n.toFixed(2)).join(",")).join(" ");
+const polyVals = vals => vals.map((v, i) => pt(i, R * v / NIVEIS).map(n => n.toFixed(2)).join(",")).join(" ");
+const el = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+const ringFill = ["#e9e9f7", "#d6d6f1", "#c1c1ea", "#a9a9e1", "#8f8fd6"];
+
+function radar(vals, cor, fill) {
+  const svg = el("svg", { viewBox: "-250 -215 500 440", role: "img" });
+  for (let k = NIVEIS; k >= 1; k--) svg.appendChild(el("polygon", { points: poly(R * k / NIVEIS), fill: ringFill[NIVEIS - k], stroke: "#17171c", "stroke-width": k === NIVEIS ? 2.2 : 1.3 }));
+  svg.appendChild(el("polygon", { points: poly(9), fill: "#17171c" }));
+  CAR.forEach((_, i) => { const [x, y] = pt(i, R); svg.appendChild(el("line", { x1: 0, y1: 0, x2: x, y2: y, stroke: "#17171c", "stroke-opacity": .22 })); });
+  svg.appendChild(el("polygon", { points: polyVals(vals), fill, stroke: cor, "stroke-width": 2.5, "stroke-linejoin": "round" }));
+  vals.forEach((v, i) => { const [x, y] = pt(i, R * v / NIVEIS); svg.appendChild(el("circle", { cx: x, cy: y, r: 4, fill: cor })); });
+  CAR.forEach((c, i) => {
+    const [x, y] = pt(i, R + 24);
+    const t = el("text", { x, y: y + 5, "text-anchor": Math.abs(x) < 8 ? "middle" : x > 0 ? "start" : "end", "font-size": 15, "font-weight": 600, "font-family": "Hanken Grotesk, system-ui, sans-serif", fill: "#17171c" });
+    t.textContent = c; svg.appendChild(t);
+  });
+  return svg;
+}
+
+
+const f1 = document.getElementById("g1"), f2 = document.getElementById("g2");
+f1.appendChild(radar([4, 5, 5, 3, 3, 5, 5, 5, 3], "#d43c3c", "rgba(212,60,60,.55)"));
+f1.insertAdjacentHTML("beforeend", "<figcaption>Junior</figcaption>");
+f2.appendChild(radar([5, 5, 4, 4, 4, 5, 4, 5, 1], "#17171c", "rgba(23,23,28,.55)"));
+f2.insertAdjacentHTML("beforeend", "<figcaption>Nós</figcaption>");
+</script>
+</body>
+</html>
